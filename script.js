@@ -6,20 +6,20 @@ $(function() {
     bloques = [];
 
     bloques.push(createBlock(0,0,14,34))
-    bloques.push(createBlock(16,2,31,7))
-    bloques.push(createBlock(16,11,31,23))
-    bloques.push(createBlock((16+31+2),2,5,32))
-    bloques.push(createBlock((56),2,33,32))
-    bloques.push(createBlock(0,0,3,70))
-    bloques.push(createBlock((5),38,6,28))
-    bloques.push(createBlock(42,37,36,18))
+    bloques.push(createBlock(17,3,31,6))
+    bloques.push(createBlock(17,12,31,22))
+    bloques.push(createBlock((51),3,5,31))
+    bloques.push(createBlock((59),3,30,31))
+    bloques.push(createBlock(0,0,5,70))
+    bloques.push(createBlock((8),37,6,28))
+    bloques.push(createBlock(44,37,36,18))
     bloques.push(createBlock(80,37,9,18))
-    bloques.push(createBlock(16,37,24,8))
-    bloques.push(createBlock(16,47,24,8))
-    bloques.push(createBlock(16,58,24,8))
-    bloques.push(createBlock(42,58,36,8))
-    bloques.push(createBlock(81,58,12,11))
-    bloques.push(createBlock(8,69,85,9))
+    bloques.push(createBlock(17,37,24,8))
+    bloques.push(createBlock(17,47,24,8))
+    bloques.push(createBlock(17,58,24,8))
+    bloques.push(createBlock(44,58,36,8))
+    bloques.push(createBlock(84,58,12,11))
+    bloques.push(createBlock(8,69,87,9))
 
     return bloques;
   }
@@ -309,7 +309,7 @@ $(function() {
   var circleRadius = 15;
   var ratios = { rock:0.05, lava:0.05 };
 
-  var layoutSize = {x:95 ,y: 80};
+  var layoutSize = {x:94 ,y: 80};
 
   var gridSize;
   var windowSize;
