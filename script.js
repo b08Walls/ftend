@@ -223,6 +223,8 @@ $(function() {
 
     // position
     var circleData = groups.position.selectAll("circle").data(path);
+    console.log(path);
+    console.log(circleData);
     circleData.exit().remove();
     var circles = circleData.enter().append("circle");
     var circleAttributes = circles
@@ -256,16 +258,16 @@ $(function() {
 
     switch(command) {
       case "U":
-        newVal = current.y-3<0 ? current.y:current.y-3;
+        newVal = current.y-3<1 ? 1:current.y-3;
         return map.grid[current.x][newVal];
       case "D":
-        newVal = current.y+3>map.grid[current.x].length ? current.y:current.y+3;
+        newVal = current.y+3>map.grid[current.x].length-1 ? map.grid[current.x].length-1:current.y+3;
         return map.grid[current.x][newVal];
       case "R":
-        newVal = current.x+3>map.grid.length ? current.x:current.x+3;
+        newVal = current.x+3>map.grid.length-1 ? map.grid.length-1:current.x+3;
         return map.grid[newVal][current.y];
       case "L":
-        newVal = current.x-3<0 ? current.x:current.x-3;
+        newVal = current.x-3<1 ? 1:current.x-3;
         return map.grid[newVal][current.y];
       default:
         throw "Unexpected command : "+command;
@@ -278,7 +280,8 @@ $(function() {
     var content = $('#commands').val();
     content = content.toUpperCase().replace(/[^UDRL]/g, "");
     $('#commands').val(content);
-    path = path!=null ? path:[start];
+    //path = path!=null ? path:[start];
+    path = [start];
     var current = start;
     for(i = 0; i < content.length; i++) {
       var next = getNext(map, current, content[i]);

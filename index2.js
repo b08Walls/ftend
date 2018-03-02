@@ -1,7 +1,7 @@
 var app = require('express')();
 var express = require('express');
 var http = require('http').Server(app);
-var Paho = require('paho-mqtt')
+var Paho = require('mqtt')
 
 //******************************************************************************************
 //***CONFIGURACION Y USO DE CODIGO MQTT PARA SERVIDOR EN NODE*******************************

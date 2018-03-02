@@ -3,6 +3,23 @@ var express = require('express');
 var http = require('http').Server(app);
 var mqtt = require('mqtt');
 
+var mqtt = require('mqtt')
+var client  = mqtt.connect('mqtt://test.mosquitto.org')
+
+
+/*console.log("INICIA CONFIG MQTT");
+client.on('connect', function () {
+  client.subscribe('presence')
+  client.publish('presence', 'Hello mqtt')
+})
+
+client.on('message', function (topic, message) {
+  // message is Buffer
+  console.log(message.toString())
+  client.end()
+})*/
+
+/*
 var options = {
     port: 10246,
     host: 'm14.cloudmqtt.com',
@@ -15,17 +32,17 @@ var options = {
     protocolVersion: 3,
     clean: true,
     encoding: 'utf8'
-};
+};*/
 
 console.log("INTENTANDO CONECTAR");
 //var client = mqtt.connect('http://m14.cloudmqtt.com',options);
 var client = mqtt.connect('http://192.168.0.65');
-//console.log(client);
+//console.log(client);*/
 
 var io = require('socket.io')(http);
 
 var socketOn = false;
-
+/*
 client.on('connect',function(){
 	client.subscribe('presence');
 	client.publish('presence','Hello mqtt');
@@ -43,7 +60,7 @@ client.on('message',function(topic,message){
 
 client.on('error', function(err) {
     console.log(err);
-});
+});*/
 
 app.get('/',function(req,res)
 {
