@@ -1,12 +1,34 @@
 {
-  "name": "socket-chat-example",
-  "version": "0.0.1",
-  "description": "my first socket.io app",
+  "name": "Tugger Tracker",
+  "version": "0.1.0",
+  "description": "First beta version in deploy",
+  "engines": {
+    "node": "8.9.1"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node test.js"
+  },
   "dependencies": {
+    "ejs": "^2.5.6",
     "express": "^4.15.2",
     "jquery": "^3.3.1",
     "mqtt": "^2.15.3",
-    "paho-mqtt": "^1.0.4",
     "socket.io": "^2.0.4"
-  }
+  },
+  "devDependencies": {
+    "request": "^2.81.0",
+    "tape": "^4.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/b08Walls/ftend.git"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "license": "MIT"
 }
