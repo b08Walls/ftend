@@ -18,8 +18,8 @@ var options = {
 };
 
 console.log("INTENTANDO CONECTAR");
-//var client = mqtt.connect('http://m14.cloudmqtt.com',options);
-var client = mqtt.connect('http://192.168.0.65');
+var client = mqtt.connect('http://m14.cloudmqtt.com',options);
+//var client = mqtt.connect('http://192.168.0.65');
 //console.log(client);
 
 var io = require('socket.io')(http);
@@ -30,7 +30,7 @@ client.on('connect',function(){
 	client.subscribe('presence');
 	client.publish('presence','Hello mqtt');
 	socketOn = true;
-	alert("CONECTADO MQTT");
+	
 });
 
 client.on('message',function(topic,message){
