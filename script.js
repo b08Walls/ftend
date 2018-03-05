@@ -405,7 +405,7 @@ $(function() {
         var valorActual = $('#commands').val();
         $('#commands').val(valorActual+msg);
         console.log("LLEGO UN MENSAJE")
-        executeCommands();
+        executeCommands2();
       });
 
       return false;
