@@ -246,45 +246,26 @@ $(function() {
   }
 
   function drawMowerHistory2(groups, scales, path) {
-    // path
-    console.log("EL PATH VALE: "+path);
-    $("#terminal").val("EL PATH VALE: "+path[0].x+" "+path[0].y);
-    groups.path.selectAll(".path").remove();
-
-
-    // var lineFunction = d3.svg.line()
-    //            .x(function(d) { return scales.x(d.x + 0.5); })
-    //            .y(function(d) { return scales.y(d.y + 0.5); })
-    //            .interpolate("linear");
-
-    // var lineGraph = groups.path.append("path")
-    //                           .attr("d", lineFunction(path))
-    //                           .attr("class", "path")
-    //                           .attr("fill", "none");
-
-    // // position
-    // var circleData = groups.position.selectAll("circle").data(path);
-    var circleData = groups.position.selectAll("circle").data(path);
-    circleData.exit().remove();
     
+    groups.position.selectAll("circle")
+        .data([path])
+        .enter()
+        .append("circle")
+        .attr("cx",function(d){return scales.x(d.x+0.5)})
+        .attr("cy",function(d){return scales.y(d.y+0.5)})
+        .attr("r",function(d){return circleRadius})
+        .attr("class",function(d){return "position"});
 
-    var circles = circleData.enter().append("circle");
-    var circleAttributes = circles
-             .attr("cx", function (d) { return scales.x(d.x + 0.5); })
-             .attr("cy", function (d) { return scales.y(d.y + 0.5); })
-             .attr("r", function (d) { return circleRadius; })
-             .attr("class", "position");
+    groups.position.selectAll("circle")
+        .data([path])
+        .attr("cx",function(d){return scales.x(d.x+0.5)})
+        .attr("cy",function(d){return scales.y(d.y+0.5)})
+        .attr("r",function(d){return circleRadius})
+        .attr("class",function(d){return "position"});
 
-    // // position number
-    // var textData = groups.position.selectAll("text").data(path);
-    // textData.exit().remove();
-    // var texts = textData.enter().append("text");
-    // var textAttributes = texts
-    //          .attr("x", function (d) { return scales.x(d.x + 0.5); })
-    //          .attr("y", function (d) { return scales.y(d.y + 0.5); })
-    //          .attr("dy", ".31em")
-    //          .text(function(d,i) { return i; })
-    //          .attr("class", "positionNumber");
+    groups.position.selectAll("circle")
+        .data([path])
+        .exit().remove();
   }
 
   function pickRandomPosition(map) {
@@ -300,16 +281,16 @@ $(function() {
 
     switch(command) {
       case "U":
-        newVal = current.y-3<0 ? current.y:current.y-3;
+        newVal = current.y-1<0 ? current.y:current.y-1;
         return map.grid[current.x][newVal];
       case "D":
-        newVal = current.y+3>map.grid[current.x].length ? current.y:current.y+3;
+        newVal = current.y+1>map.grid[current.x].length ? current.y:current.y+1;
         return map.grid[current.x][newVal];
       case "R":
-        newVal = current.x+3>map.grid.length ? current.x:current.x+3;
+        newVal = current.x+1>map.grid.length ? current.x:current.x+1;
         return map.grid[newVal][current.y];
       case "L":
-        newVal = current.x-3<0 ? current.x:current.x-3;
+        newVal = current.x-1<0 ? current.x:current.x-1;
         return map.grid[newVal][current.y];
       default:
         throw "Unexpected command : "+command;
@@ -344,7 +325,22 @@ $(function() {
           throw "Unexpected terrain type "+next.type;
       }
     }
-    drawMowerHistory2(groups, scales, [path[path.length-1]]);
+    drawMowerHistory2(groups, scales, path);
+  }
+
+  function executeCommands2(e)
+  {
+    var content = $('#commands').val();
+    content = content.toUpperCase().replace(/[^UDRL]/g, "");
+    $('#commands').val("");
+
+    var next = getNext(map,start,content[content.length-1]);
+
+    if(next.type === "grass")
+    {
+      start = next;
+      drawMowerHistory2(groups,scales,start)
+    }
   }
 
 
@@ -360,6 +356,7 @@ $(function() {
   var svgSize;
   var map;
   var start;
+  var actual;
   var svgContainer;
   var scales;
   var groups;
@@ -398,7 +395,7 @@ $(function() {
 
   initEverything();
 
-  $('#commands').on('input', executeCommands);
+  $('#commands').on('input', executeCommands2);
 
   $(function (){
     var socket = io();
