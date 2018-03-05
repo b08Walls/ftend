@@ -210,6 +210,8 @@ $(function() {
 
   function drawMowerHistory(groups, scales, path) {
     // path
+    console.log("EL PATH VALE: "+path);
+    $("#terminal").val("EL PATH VALE: "+path[0].x+" "+path[0].y);
     groups.path.selectAll(".path").remove();
     var lineFunction = d3.svg.line()
                .x(function(d) { return scales.x(d.x + 0.5); })
@@ -241,6 +243,48 @@ $(function() {
              .attr("dy", ".31em")
              .text(function(d,i) { return i; })
              .attr("class", "positionNumber");
+  }
+
+  function drawMowerHistory2(groups, scales, path) {
+    // path
+    console.log("EL PATH VALE: "+path);
+    $("#terminal").val("EL PATH VALE: "+path[0].x+" "+path[0].y);
+    groups.path.selectAll(".path").remove();
+
+
+    // var lineFunction = d3.svg.line()
+    //            .x(function(d) { return scales.x(d.x + 0.5); })
+    //            .y(function(d) { return scales.y(d.y + 0.5); })
+    //            .interpolate("linear");
+
+    // var lineGraph = groups.path.append("path")
+    //                           .attr("d", lineFunction(path))
+    //                           .attr("class", "path")
+    //                           .attr("fill", "none");
+
+    // // position
+    // var circleData = groups.position.selectAll("circle").data(path);
+    var circleData = groups.position.selectAll("circle").data(path);
+    circleData.exit().remove();
+    
+
+    var circles = circleData.enter().append("circle");
+    var circleAttributes = circles
+             .attr("cx", function (d) { return scales.x(d.x + 0.5); })
+             .attr("cy", function (d) { return scales.y(d.y + 0.5); })
+             .attr("r", function (d) { return circleRadius; })
+             .attr("class", "position");
+
+    // // position number
+    // var textData = groups.position.selectAll("text").data(path);
+    // textData.exit().remove();
+    // var texts = textData.enter().append("text");
+    // var textAttributes = texts
+    //          .attr("x", function (d) { return scales.x(d.x + 0.5); })
+    //          .attr("y", function (d) { return scales.y(d.y + 0.5); })
+    //          .attr("dy", ".31em")
+    //          .text(function(d,i) { return i; })
+    //          .attr("class", "positionNumber");
   }
 
   function pickRandomPosition(map) {
@@ -300,7 +344,7 @@ $(function() {
           throw "Unexpected terrain type "+next.type;
       }
     }
-    drawMowerHistory(groups, scales, path);
+    drawMowerHistory2(groups, scales, [path[path.length-1]]);
   }
 
 
@@ -349,7 +393,7 @@ $(function() {
     groups = { path:svgContainer.append("g"),
                     position:svgContainer.append("g") };
 
-    drawMowerHistory(groups, scales, [start]);
+    drawMowerHistory2(groups, scales, [start]);
   }
 
   initEverything();
