@@ -23,7 +23,9 @@ svg {
 }
 
 .grass {
-	fill: #3CAB26;
+	/*fill: #3CAB26;*/
+	fill: red;
+	opacity:0.5;
 	stroke-width: 1px;
 	stroke: #2D801C;
 }
