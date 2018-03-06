@@ -32,6 +32,8 @@ $(function() {
     block.height = Math.floor(height);
     block.width = Math.floor(width);
 
+    
+
     return block;
   }
 
@@ -382,6 +384,14 @@ $(function() {
                               .attr("width", svgSize.width)
                               .attr("height", svgSize.height);
     scales = getScale(gridSize, svgSize);
+
+
+    svgContainer.append('svg:image')
+          .attr('xlink:href', '/image/layout.jpg')
+          .attr("width", svgSize.width)
+          .attr("height", svgSize.height)
+          .attr("x", 0)
+          .attr("y", 0);
 
     drawCells(svgContainer, scales, map.grass, "grass");
     drawCells(svgContainer, scales, map.rock, "rock");

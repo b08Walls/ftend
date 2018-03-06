@@ -24,12 +24,14 @@ svg {
 
 .grass {
 	fill: #3CAB26;
+	opacity: 0.5;
 	stroke-width: 1px;
 	stroke: #2D801C;
 }
 
 .rock {
-	fill: #858585;
+	fill: white;
+	opacity: 0.1;
 	stroke-width: 1px;
 	stroke: #C7C7C7;
 }
