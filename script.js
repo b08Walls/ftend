@@ -127,14 +127,7 @@ $(function() {
             var lava = Math.random() < ratios.lava;*/
             /*Dentro de la variable type sera igual a rock si es un borde, caso contrario sera grass*/
             var type = isBorder(x, y, gridSize)?"rock":"grass";
-            /*Si no era borde y se le asigno tipo grass pero la posibilidad de rock fue true, entonces se asignara tipo rock
-            if(rock) {
-              type = "rock";
-            }
-            /*Aun cuando no haya sido borde, haya sido rock, si fue tipo lava, este sera el tipo asignado
-            if(lava) {
-              type = "lava";
-            }
+            
             /*En la variable cel, se guardara un objeto el cual tiene 3 atributos llamados x, y y type a los cuales se les asignan
             los valores de sus respectivas variables*/
 
@@ -250,16 +243,16 @@ $(function() {
   function drawMowerHistory2(groups, scales, path) {
     
     groups.position.selectAll("circle")
-        .data([path])
+        .data(path)
         .enter()
         .append("circle")
-        .attr("cx",function(d){return scales.x(d.x+0.5)})
+        .attr("cx",function(d){return console.log("d",d);scales.x(d.x+0.5)})
         .attr("cy",function(d){return scales.y(d.y+0.5)})
         .attr("r",function(d){return circleRadius})
         .attr("class",function(d){return "position"});
 
     groups.position.selectAll("circle")
-        .data([path])
+        .data(path)
         .attr("cx",function(d){return scales.x(d.x+0.5)})
         .attr("cy",function(d){return scales.y(d.y+0.5)})
         .attr("r",function(d){return circleRadius})
@@ -297,6 +290,18 @@ $(function() {
       default:
         throw "Unexpected command : "+command;
       }
+  }
+
+  function getNext2(map, newPos) {
+
+    if(newPos.x<map.grid.length && newPos.x>=0 && newPos.y <map.grid[0].length && newPos.y>=0)
+    {
+      return map.grid[newPos.x][newPos.y];
+    }
+    else
+    {
+      return null;
+    }
   }
 
   var path = null;
@@ -375,7 +380,14 @@ $(function() {
 
     svgSize = getSvgSize(gridSize, squareLength);
     map = buildMap2(gridSize, ratios);
-    start = pickRandomPosition(map)
+    
+    start = map.grid[4][77]
+    
+    console.log("map = ",map);
+
+    console.log("map.grid = ",map.grid);
+
+    console.log(start);
 
     d3.select("svg").remove()
 
@@ -407,7 +419,7 @@ $(function() {
 
   $('#commands').on('input', executeCommands2);
 
-  $(function (){
+  /*$(function (){
     var socket = io();
     
 
@@ -419,9 +431,37 @@ $(function() {
       });
 
       return false;
-    });
+    });*/
 
-  
+  $(function (){
+    var socket = io();
+    
+
+    socket.on('chat message',function(msg){
+        
+        try
+        {
+          var json = JSON.parse(msg);
+          var next = getNext2(map,json)
+          if(next !== null)
+          {
+            if(next.type === "grass")
+            {
+              start = next;
+              drawMowerHistory2(groups,sacales,[start]);
+            }
+          }
+        }
+        catch(e)
+        {
+
+        }
+        
+        console.log("LLEGO UN MENSAJE")
+      });
+
+      return false;
+    });  
 
   $(window).resize(function(){
     
