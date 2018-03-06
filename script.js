@@ -439,9 +439,11 @@ $(function() {
 
     socket.on('chat message',function(msg){
         
+        alert(msg);
         try
         {
           var json = JSON.parse(msg);
+          alert("parse correcto");
           var next = getNext2(map,json)
           if(next !== null)
           {
