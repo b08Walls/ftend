@@ -454,7 +454,7 @@ $(function() {
         }
         catch(e)
         {
-
+          console.log("ERROR");
         }
         
         console.log("LLEGO UN MENSAJE")
