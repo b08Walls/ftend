@@ -450,7 +450,7 @@ $(function() {
             if(next.type === "grass")
             {
               start = next;
-              drawMowerHistory2(groups,sacales,[start]);
+              drawMowerHistory2(groups,scales,[start]);
             }
           }
         }
