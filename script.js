@@ -24,7 +24,7 @@ $(function() {
     return bloques;
   }
 
-  function createBlock(x,y,width,height)
+  function createBlock(x,y,width,height,path)
   {
     var block = {};
     block.x = Math.floor(x);
@@ -32,7 +32,12 @@ $(function() {
     block.height = Math.floor(height);
     block.width = Math.floor(width);
 
-    
+    block.imageWidth = block.width*squareLength;
+    block.imageHeight = blick.height*squareLength;
+    block.imageX = block.x*squareLength;
+    block.imageY = block.y*squareLength;
+
+    block.imagePath = path;
 
     return block;
   }
@@ -139,6 +144,15 @@ $(function() {
               {
                 console.log("x: "+x+", y: "+y);
                 type = "rock";
+                if(bloques[i].x === x && bloques[i].y === y)
+                {
+                  svgContainer.append('svg:image')
+                              .attr('xlink:href', '/image/'+bloques[i].imagePath)
+                              .attr("width", bloques[i].imageWidth)
+                              .attr("height", bloques[i].imageHeight)
+                              .attr("x", bloques[i].x)
+                              .attr("y", bloques[i].y);
+                }
               }
             }
 
