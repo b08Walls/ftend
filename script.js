@@ -6,14 +6,15 @@ $(function() {
     bloques = [];
 
     bloques.push(createBlock(0,0,14,34))
-    bloques.push(createBlock(17,3,31,6))
-    bloques.push(createBlock(17,12,31,22))
-    bloques.push(createBlock((51),3,5,31))
-    bloques.push(createBlock((59),3,30,31))
-    bloques.push(createBlock(0,0,5,70))
+    //PSG
+    bloques.push(createBlock(17,3,31,6,"psg k2.jpg"))
+    bloques.push(createBlock(17,12,31,22,"psg linea princial.jpg"))
+    bloques.push(createBlock((51),3,5,31,"PSG FIFO.jpg"))
+    bloques.push(createBlock((59),3,30,31,"lineas.jpg"))
+    bloques.push(createBlock(0,0,5,70,"almacenes.jpg"))
     bloques.push(createBlock((8),37,6,28))
-    bloques.push(createBlock(44,37,36,18))
-    bloques.push(createBlock(80,37,9,18))
+    bloques.push(createBlock(44,37,45,18,"embragues.jpg"))
+    //bloques.push(createBlock(80,37,9,18))
     bloques.push(createBlock(17,37,24,8))
     bloques.push(createBlock(17,47,24,8))
     bloques.push(createBlock(17,58,24,8))
@@ -32,12 +33,19 @@ $(function() {
     block.height = Math.floor(height);
     block.width = Math.floor(width);
 
-    block.imageWidth = block.width*squareLength;
-    block.imageHeight = blick.height*squareLength;
-    block.imageX = block.x*squareLength;
-    block.imageY = block.y*squareLength;
+    block.imageWidth = (block.width+1)*squareLength;
+    block.imageHeight = (block.height+1)*squareLength;
+    block.imageX = (block.x*squareLength)+5;
+    block.imageY = (block.y*squareLength)+5;
 
-    block.imagePath = path;
+    if(path!== undefined)
+    {
+      block.imagePath = path;
+    }
+    else
+    {
+      block.imagePath = undefined;
+    }
 
     return block;
   }
@@ -142,16 +150,54 @@ $(function() {
             {
               if(x>bloques[i].x && x<=bloques[i].x+bloques[i].width && y>bloques[i].y && y<=bloques[i].y+bloques[i].height)
               {
-                console.log("x: "+x+", y: "+y);
+                //console.log("x: "+x+", y: "+y);
                 type = "rock";
-                if(bloques[i].x === x && bloques[i].y === y)
+                // if(bloques[i].imagePath!== undefined)
+                // {
+                //   console.log(bloques[i].x,x,bloques[i].y,y,bloques[i].imagePath);
+                // }
+
+                if(bloques[i].x === x-1 && bloques[i].y === y-1 && bloques[i].imagePath!==undefined)
                 {
+                  //alert("IMAGE PLACED");
+                  console.log("image width",bloques[i].imageWidth);
+                  console.log("width",bloques[i].width);
+                  console.log("image height",bloques[i].imageHeight);
+                  console.log("height",bloques[i].height);
+
+                  var nameDim = "";
+                  var valDim = 0;
+                  var valFixed = 0;
+                  var nameFixed = "";
+                  var valOffset = 0;
+                  var nameOffset = "";
+
+                  if(bloques[i].imageWidth>bloques[i].imageHeight)
+                  {
+                    valDim = bloques[i].imageWidth;
+                    nameDim = "width";
+                    valFixex = bloques[i].imageX;
+                    nameFixed = "x";
+                    valOffset = bloques[i].imageHeight
+                  }
+                  else
+                  {
+                    valDim = bloques[i].imageHeight;
+                    nameDim = "height";
+                  }
+
+                  var img = new Image();
+                  img.onload = function(){
+                      alert( this.width+' '+ this.height );
+                  };
+                  img.src = '/image/'+bloques[i].imagePath;
+
                   svgContainer.append('svg:image')
                               .attr('xlink:href', '/image/'+bloques[i].imagePath)
-                              .attr("width", bloques[i].imageWidth)
-                              .attr("height", bloques[i].imageHeight)
-                              .attr("x", bloques[i].x)
-                              .attr("y", bloques[i].y);
+                              .attr(nameDim, valDim)
+                              .attr("x", bloques[i].imageX)
+                              .attr("y", bloques[i].imageY)
+                              .attr("transform","scale(1,1)");
                 }
               }
             }
@@ -393,15 +439,6 @@ $(function() {
     circleRadius = squareLength;
 
     svgSize = getSvgSize(gridSize, squareLength);
-    map = buildMap2(gridSize, ratios);
-    
-    start = map.grid[4][77]
-    
-    console.log("map = ",map);
-
-    console.log("map.grid = ",map.grid);
-
-    console.log(start);
 
     d3.select("svg").remove()
 
@@ -412,12 +449,21 @@ $(function() {
     scales = getScale(gridSize, svgSize);
 
 
-    svgContainer.append('svg:image')
+    map = buildMap2(gridSize, ratios);
+    
+    start = map.grid[4][77]
+    
+    console.log("map = ",map);
+
+    console.log("map.grid = ",map.grid);
+
+    console.log(start);
+    /*svgContainer.append('svg:image')
           .attr('xlink:href', '/image/layout.jpg')
-          .attr("width", svgSize.width)
-          .attr("height", svgSize.height)
+          .attr("width", 400)
+          .attr("height", 300)
           .attr("x", 0)
-          .attr("y", 0);
+          .attr("y", 0);*/
 
     drawCells(svgContainer, scales, map.grass, "grass");
     drawCells(svgContainer, scales, map.rock, "rock");
