@@ -171,33 +171,42 @@ $(function() {
                   var nameFixed = "";
                   var valOffset = 0;
                   var nameOffset = "";
+                  var trueImageWidth = 0;
+                  var trueImageHeight = 0;
+
+                  var img = new Image();
+                  img.onload = function(){
+                      console.log( this.width+' '+ this.height );
+                      trueImageHeight = this.height;
+                      trueImageWidth = this.width;
+                  };
+                  img.src = '/image/'+bloques[i].imagePath;
+
+                  console.log("VALORES: ",bloques[i].imageWidth,bloques[i].imageHeight,trueImageWidth,trueImageHeight)
 
                   if(bloques[i].imageWidth>bloques[i].imageHeight)
                   {
                     valDim = bloques[i].imageWidth;
                     nameDim = "width";
-                    valFixex = bloques[i].imageX;
-                    nameFixed = "x";
-                    valOffset = bloques[i].imageHeight
+                    nameOffset = "scale(1,"+valOffset+")";
+                    valOffset = (bloques[i].imageHeight/((bloques[i].imageWidth/trueImageWidth)*trueImageHeight));
+                    nameOffset = "scale("+valOffset+",1)";
                   }
                   else
                   {
                     valDim = bloques[i].imageHeight;
                     nameDim = "height";
+                    valOffset = (bloques[i].imageWidth/((bloques[i].imageHeight/trueImageHeight)*trueImageWidth))
                   }
 
-                  var img = new Image();
-                  img.onload = function(){
-                      alert( this.width+' '+ this.height );
-                  };
-                  img.src = '/image/'+bloques[i].imagePath;
+                  console.log("offset: ",valOffset)
 
                   svgContainer.append('svg:image')
                               .attr('xlink:href', '/image/'+bloques[i].imagePath)
                               .attr(nameDim, valDim)
                               .attr("x", bloques[i].imageX)
                               .attr("y", bloques[i].imageY)
-                              .attr("transform","scale(1,1)");
+                              .attr("transform",nameOffset);
                 }
               }
             }
