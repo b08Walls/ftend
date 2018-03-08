@@ -13,7 +13,7 @@ $(function() {
     bloques.push(createBlock((59),3,30,31,"lineas.jpg"))
     bloques.push(createBlock(0,0,5,70,"almacenes.jpg"))
     bloques.push(createBlock((8),37,6,28))
-    bloques.push(createBlock(44,37,45,17,"embragues.jpg"))
+    bloques.push(createBlock(44,37,45,17,"war room.jpg"))
     //bloques.push(createBlock(80,37,9,18))
     bloques.push(createBlock(17,37,24,8,"actuador.jpg"))
     bloques.push(createBlock(17,47,24,8,"discos 3.jpg"))
