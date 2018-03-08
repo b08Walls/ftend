@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>a D3.js powered mower</title>
+        <title>Tugger-Tracker</title>
         <meta name="description" content="">
         <script src="d3.js"></script>
         <script src="jquery.js"></script>
@@ -12,45 +12,7 @@
     <body>
         <div class="display">
         </div>
-        <div class="control">
-            <textarea readonly rows="8" cols="50">
-Type commands in the input below in order to move the mower.
-U : move up
-D : move down
-R : move right
-L : move left
-            </textarea>
-            <br/>
-            <textarea id="commands" rows="8" cols="50"></textarea>
-            <br/>
-            <textarea id="terminal" readonly rows="8" cols="50">
-Be careful! There are 3 kinds of terrain:
-green -> grass, where the mower should be, most of the time
-gray -> rock, where the mower can't go
-red -> lava, where the mower will turn into ashes
-
-This game is a proof of concept using d3js, feel free to fork and improve.
-            </textarea>
-        </div>
-        <br/>
     </body>
 
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-
-    <script type="text/javascript">
-        // $(function (){
-        //     var socket = io();
-        //     $('form').submit(function(){
-        //         socket.emit('chat message',$('#m').val());
-        //         $('#m').val('');
-        //         return false;
-        //     });
-
-        //     socket.on('chat message',function(msg){
-        //         $('#messages').append($('<li>').text(msg));
-        //     });
-
-        //     return false;
-        // });
-    </script>
 </html>
