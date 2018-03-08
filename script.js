@@ -33,10 +33,10 @@ $(function() {
     block.height = Math.floor(height);
     block.width = Math.floor(width);
 
-    block.imageWidth = (block.width+1)*squareLength;
-    block.imageHeight = (block.height+1)*squareLength;
-    block.imageX = (block.x*squareLength)+5;
-    block.imageY = (block.y*squareLength)+5;
+    block.imageWidth = (block.width)*squareLength;
+    block.imageHeight = (block.height)*squareLength;
+    block.imageX = (block.x*squareLength)+squareLength;
+    block.imageY = (block.y*squareLength)+squareLength;
 
     if(path!== undefined)
     {
@@ -165,48 +165,10 @@ $(function() {
                   console.log("image height",bloques[i].imageHeight);
                   console.log("height",bloques[i].height);
 
-                  var nameDim = "";
-                  var valDim = 0;
-                  var valFixed = 0;
-                  var nameFixed = "";
-                  var valOffset = 0;
-                  var nameOffset = "";
-                  var trueImageWidth = 0;
-                  var trueImageHeight = 0;
 
                   var img = new Image();
-                  img.onload = function(){
-                      console.log( this.width+' '+ this.height );
-                      trueImageHeight = this.height;
-                      trueImageWidth = this.width;
-                  };
+                  img.onload = addImage(bloques[i],svgContainer);
                   img.src = '/image/'+bloques[i].imagePath;
-
-                  console.log("VALORES: ",bloques[i].imageWidth,bloques[i].imageHeight,trueImageWidth,trueImageHeight)
-
-                  if(bloques[i].imageWidth>bloques[i].imageHeight)
-                  {
-                    valDim = bloques[i].imageWidth;
-                    nameDim = "width";
-                    nameOffset = "scale(1,"+valOffset+")";
-                    valOffset = (bloques[i].imageHeight/((bloques[i].imageWidth/trueImageWidth)*trueImageHeight));
-                    nameOffset = "scale("+valOffset+",1)";
-                  }
-                  else
-                  {
-                    valDim = bloques[i].imageHeight;
-                    nameDim = "height";
-                    valOffset = (bloques[i].imageWidth/((bloques[i].imageHeight/trueImageHeight)*trueImageWidth))
-                  }
-
-                  console.log("offset: ",valOffset)
-
-                  svgContainer.append('svg:image')
-                              .attr('xlink:href', '/image/'+bloques[i].imagePath)
-                              .attr(nameDim, valDim)
-                              .attr("x", bloques[i].imageX)
-                              .attr("y", bloques[i].imageY)
-                              .attr("transform",nameOffset);
                 }
               }
             }
@@ -235,6 +197,59 @@ $(function() {
 
   }
 
+
+  function addImage(bloque, svgContainer)
+  {
+
+    // var img = new Image();
+    //img.onload = function(){
+    function myCallBack(){
+        console.log( this.width+' '+ this.height );
+        var trueImageHeight = this.height;
+        var trueImageWidth = this.width;
+        var valDim = 0;
+        var nameDim = "";
+        var nameOffset ="";
+        var valOffset = 0;
+
+
+        if(bloque.imageWidth>bloque.imageHeight)
+        {
+          valDim = bloque.imageWidth;
+          nameDim = "width";
+          console.log("bloque.imageHeight: ",bloque.imageHeight,"trueImageHeight: ",trueImageHeight);
+          valOffset = bloque.imageHeight/(trueImageHeight*(bloque.imageWidth/trueImageWidth));
+          nameOffset = "scale(1,"+valOffset+")";
+        }
+        else
+        {
+          valDim = bloque.imageHeight;
+          nameDim = "height";
+          // valOffset = (bloque.imageWidth/((bloque.imageHeight/trueImageHeight)*trueImageWidth))
+          //valOffset = bloque.imageWidth/(trueImageWidth*(bloque.imageHeight/trueImageHeight));
+          valOffset = 1;
+          nameOffset = "scale("+valOffset+",1)";
+        }
+
+        console.log("offset: ",valOffset);
+        console.log("VALOR TRANSFORM: ",nameOffset);
+
+        svgContainer.append('svg:image')
+                    .attr('xlink:href', '/image/'+bloque.imagePath)
+                    .attr(nameDim, valDim)
+                    .attr("x", bloque.imageX)
+                    .attr("y", bloque.imageY)
+                    .attr("transform",nameOffset);
+
+    };
+    // img.src = '/image/'+bloque.imagePath;
+
+    // console.log("VALORES: ",bloques[i].imageWidth,bloques[i].imageHeight,trueImageWidth,trueImageHeight)
+
+    // return img.onload;    
+    return myCallBack;
+
+  }
 
   /*Esta funcion retorna un objeto con el valor de dos escalas por medio de algunos metodos de D3*/
   function getScale(gridSize, svgSize) {
