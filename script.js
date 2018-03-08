@@ -13,14 +13,14 @@ $(function() {
     bloques.push(createBlock((59),3,30,31,"lineas.jpg"))
     bloques.push(createBlock(0,0,5,70,"almacenes.jpg"))
     bloques.push(createBlock((8),37,6,28))
-    bloques.push(createBlock(44,37,45,18,"embragues.jpg"))
+    bloques.push(createBlock(44,37,45,17,"embragues.jpg"))
     //bloques.push(createBlock(80,37,9,18))
-    bloques.push(createBlock(17,37,24,8))
-    bloques.push(createBlock(17,47,24,8))
-    bloques.push(createBlock(17,58,24,8))
-    bloques.push(createBlock(44,58,36,8))
-    bloques.push(createBlock(84,58,12,11))
-    bloques.push(createBlock(8,69,87,9))
+    bloques.push(createBlock(17,37,24,8,"actuador.jpg"))
+    bloques.push(createBlock(17,47,24,8,"discos 3.jpg"))
+    bloques.push(createBlock(17,58,24,7,"discos 2.jpg"))
+    bloques.push(createBlock(44,58,36,6,"discos 1.jpg"))
+    bloques.push(createBlock(84,58,12,11,"oficinas 2.png"))
+    bloques.push(createBlock(8,69,87,9,"oficinas.png"))
 
     return bloques;
   }
@@ -206,7 +206,7 @@ $(function() {
                               .attr(nameDim, valDim)
                               .attr("x", bloques[i].imageX)
                               .attr("y", bloques[i].imageY)
-                              .attr("transform",nameOffset);
+                              //.attr("transform",nameOffset);
                 }
               }
             }

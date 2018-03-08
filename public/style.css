@@ -23,15 +23,15 @@ svg {
 }
 
 .grass {
-	fill: #3CAB26;
+	fill: rgb(224,224,224);
 	opacity: 1;
 	stroke-width: 1px;
-	stroke: #2D801C;
+	stroke: rgb(180,180,180);
 }
 
 .rock {
 	fill: none;
-	/*opacity: 0;*/
+	/*opacity: 0.3;*/
 	stroke-width: 1px;
 	stroke: none;
 }
