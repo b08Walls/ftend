@@ -6,7 +6,7 @@ var app = require('express')();
 var http = require('http').Server(app);
 var mqtt = require('mqtt');
 
-var options = {
+/*var options = {
     port: 10246,
     host: 'm14.cloudmqtt.com',
     clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8),
@@ -18,11 +18,24 @@ var options = {
     protocolVersion: 3,
     clean: true,
     encoding: 'utf8'
+};*/
+
+var optiones = {
+
+	port: 1883,
+	host: "192.168.1.65",
+	clientID: 'node_master',
+	keepalive:60,
+	reconnectPeriod:1000,
+	protocolId: 'MQIsdp',
+	protocolVersion:3,
+	clean:true,
+	encoding: 'utf8'
 };
 
 console.log("INTENTANDO CONECTAR");
-var client = mqtt.connect('http://m14.cloudmqtt.com',options);
-//var client = mqtt.connect('http://192.168.0.65');
+//var client = mqtt.connect('http://m14.cloudmqtt.com',options);
+var client = mqtt.connect('http://192.168.1.65');
 //console.log(client);
 
 var io = require('socket.io')(http);
@@ -31,16 +44,25 @@ var socketOn = false;
 
 client.on('connect',function(){
 	client.subscribe('presence');
+	client.subscribe('node/register')
 	client.publish('presence','Hello mqtt');
+	client.subscribe('tugger');
 	socketOn = true;
 	
 });
 
 client.on('message',function(topic,message){
-	console.log(message.toString());
+	//console.log(message.toString());
 	if(socketOn)
 	{
-		io.emit('chat message',message.toString());
+		if(topic === "tugger")
+		{
+			//HACER PARSE A OBJETO JSON
+			var registro = JSON.parse(message);
+			console.log("Objeto creado con exito: ",registro.chipid);
+
+		}
+		//io.emit('chat message',message.toString());
 	}
 });
 
