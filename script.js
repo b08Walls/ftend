@@ -206,9 +206,24 @@ $(function() {
              .attr("width", function (d) { return squareLength; })
              .attr("height", function (d) { return squareLength; })
              .attr("class", cssClass)
-             .on("click",function(){console.log("click",this);})
+             // .on("click",function(){console.log("click",this);})
+             .on("click",onBlockClicked(this))
              .on("mouseover",function(){d3.select(this).attr("class","mouseovered");})
              .on("mouseout",function(){d3.select(this).attr("class",cssClass)});
+
+  }
+
+  function onBlockClicked(block)
+  {
+
+    var bloque = block;
+
+    var resultFunction = function (){
+      alert("click!!");
+      
+    }
+
+    return resultFunction;
 
   }
 
