@@ -65,7 +65,8 @@ $(function() {
   }
 
   /*Funcion que corrobora si las coordenadas dadas al metodo son parte del borde*/
-  function isBorder(x, y, gridSize) {
+  function isBorder(x, y, gridSize) 
+  {
     return x==0 || y == 0 || x == (gridSize.x-1) || y == (gridSize.y-1);
   }
 
@@ -193,7 +194,8 @@ $(function() {
     return { x:xScale, y:yScale };
   }
 
-  function drawCells(svgContainer, scales, data, cssClass) {
+  function drawCells(svgContainer, scales, data, cssClass) 
+  {
     
     var gridGroup = svgContainer.append("g");
     var cells = gridGroup.selectAll("rect")
@@ -210,7 +212,6 @@ $(function() {
              .on("click",onBlockClicked(this))
              .on("mouseover",function(){d3.select(this).attr("class","mouseovered");})
              .on("mouseout",function(){d3.select(this).attr("class",cssClass)});
-
   }
 
   function onBlockClicked(block)
@@ -249,12 +250,6 @@ $(function() {
     groups.position.selectAll("circle")
         .data([path])
         .exit().remove();
-  }
-
-  function pickRandomPosition(map) {
-    var grass = map.grass;
-    var i = Math.ceil(Math.random() * grass.length);
-    return grass[i];
   }
 
   function getNext2(map, newPos) {
